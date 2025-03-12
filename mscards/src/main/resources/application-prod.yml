@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: mscards
+  datasource:
+    url: jdbc:postgresql://cursoms-db:5432/mscards
+    username: postgres
+    password: root
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    hibernate:
+      ddl-auto: create
+    show-sql: false
+  rabbitmq:
+    host: ${RABBITMQ_SERVER}
+    port: 5672
+    username: guest
+    password: guest
+
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_SERVER}:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+
+mq:
+  queues:
+    card_issuance: card_issuance
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+logging:
+  file:
+    name: ./logs/log-file.log
